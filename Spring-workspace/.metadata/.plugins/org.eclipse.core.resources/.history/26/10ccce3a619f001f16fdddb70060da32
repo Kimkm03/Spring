@@ -1,0 +1,20 @@
+package com.shop.shopping.controller.api;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.shop.shopping.service.StyleService;
+
+@RestController
+@RequestMapping("/api/style")
+@CrossOrigin(origins = "http://localhost:3000")
+public class StyleController {
+private final StyleService styleService;
+	
+	@Autowired
+	public StyleController(StyleService styleService) {
+		this.styleService = styleService;
+	}
+}
