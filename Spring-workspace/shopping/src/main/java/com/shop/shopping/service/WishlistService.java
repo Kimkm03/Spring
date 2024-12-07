@@ -69,4 +69,8 @@ private final WishlistRepository wishRepository;
     public boolean isProductInWishlist(int styleCode, int memberCode) {
         return wishRepository.existsByStyleCodeAndMemberCode(styleCode, memberCode);
     }
+    
+    public List<Wishlist> getWishlistByMemberCodeAndKeyword(int memberCode, String keyword) {
+        return wishRepository.findByMemberCodeAndProductNameContaining(memberCode, keyword);
+    }
 }

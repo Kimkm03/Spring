@@ -26,4 +26,8 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Integer>{
 	// 관심 목록에 해당 상품이 존재하는지 확인하는 쿼리 (int 타입 사용)
     @Query("SELECT COUNT(w) > 0 FROM Wishlist w WHERE w.styleCode = :styleCode AND w.memberCode = :memberCode")
     boolean existsByStyleCodeAndMemberCode(int styleCode, int memberCode);
+    
+    // memberCode로 필터링하고, productCode와 관련된 상품명(keyword)을 포함하는 Wishlist를 찾음
+    @Query("SELECT w FROM Wishlist w JOIN Product p ON w.productCode = p.pnum WHERE w.memberCode = :memberCode AND p.pname LIKE %:keyword%")
+    List<Wishlist> findByMemberCodeAndProductNameContaining(int memberCode, String keyword);
 }

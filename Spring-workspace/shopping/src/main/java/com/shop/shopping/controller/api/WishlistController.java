@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shop.shopping.dto.ResponseDto;
-import com.shop.shopping.dto.WishlistRequest;
 import com.shop.shopping.model.Wishlist;
 import com.shop.shopping.service.WishlistService;
 
@@ -63,6 +63,11 @@ public class WishlistController {
     @PostMapping("/check/{styleCode}/{memberCode}")
     public boolean checkIfExists(@PathVariable int styleCode, @PathVariable int memberCode) {
         return wishlistService.isProductInWishlist(styleCode, memberCode);
+    }
+    
+    @GetMapping("/search")
+    public List<Wishlist> searchWishlist(@RequestParam("keyword") String keyword, @RequestParam("memberCode") int memberCode) {
+        return wishlistService.getWishlistByMemberCodeAndKeyword(memberCode, keyword);
     }
 	
 	@GetMapping("/productCode/{memberCode}")
