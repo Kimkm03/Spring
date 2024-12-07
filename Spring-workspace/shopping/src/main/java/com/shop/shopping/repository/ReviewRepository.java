@@ -13,4 +13,10 @@ import com.shop.shopping.model.Review;
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 	@Query(value = "SELECT * FROM review WHERE productcode = :productCode", nativeQuery = true)
 	List<Review> findByProductCode(@Param("productCode") Integer productCode);
+	
+	@Query(value = "SELECT * FROM review WHERE memnum = :memnum", nativeQuery = true)
+	List<Review> findByMemnum(@Param("memnum") Integer memnum);
+	
+	// productCode와 memnum에 해당하는 리뷰를 찾는 메서드
+    Review findByProductCodeAndMemnum(Integer productCode, Integer memnum);
 }

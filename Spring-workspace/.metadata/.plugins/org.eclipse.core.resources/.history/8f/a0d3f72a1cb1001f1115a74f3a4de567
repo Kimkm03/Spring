@@ -1,0 +1,5 @@
+package com.shop.shopping.controller.api;
+
+public class WishlistController {
+
+}

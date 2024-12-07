@@ -1,0 +1,16 @@
+package com.shop.shopping.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.shop.shopping.model.Wishlist;
+
+@Repository
+public interface WishlistRepository extends JpaRepository<Wishlist, Integer>{
+	@Query("SELECT w.id FROM wishlist w WHERE w.productCode = :productCode")
+    Integer findwishIdByProductCode(Integer productCode);
+	
+	@Query("SELECT w.id FROM wishlist w WHERE w.styleCode = :styleCode")
+    Integer findwishIdByStyleCode(Integer styleCode);
+}

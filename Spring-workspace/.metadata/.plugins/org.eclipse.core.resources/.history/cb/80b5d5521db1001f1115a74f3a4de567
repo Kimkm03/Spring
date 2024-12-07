@@ -1,0 +1,16 @@
+package com.shop.shopping.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.shop.shopping.repository.WishlistRepository;
+
+@Service
+public class WishlistService {
+private final WishlistRepository wishRepository;
+	
+	@Autowired
+	public WishlistService(WishlistRepository wishRepository) {
+		this.wishRepository = wishRepository;
+	}
+}

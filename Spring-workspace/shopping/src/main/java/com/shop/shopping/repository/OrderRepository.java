@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.shop.shopping.model.Order;
+import com.shop.shopping.model.Product;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
@@ -23,4 +24,29 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
 	@Query(value = "SELECT COUNT(*) FROM orders", nativeQuery = true)
 	Integer getTotalOrdersCount();
+
+	@Query(value = """
+		    SELECT * FROM orders 
+		    WHERE userCode = :userCode
+		      AND (
+		        :orderStatus IS NULL AND  
+		        orderStatus IN ('PREPARING_SHIPMENT', 'IN_TRANSIT', 'DELIVERED') OR 
+		        orderStatus = :orderStatus
+		      )
+		      AND (:startDate IS NULL OR orderDate >= :startDate) 
+		      AND (:endDate IS NULL OR orderDate <= :endDate)
+		""", nativeQuery = true)
+		List<Order> findOrdersByCriteria(
+		    @Param("userCode") Integer userCode,
+		    @Param("orderStatus") String orderStatus,
+		    @Param("startDate") String startDate,
+		    @Param("endDate") String endDate
+		);
+
+	@Query(value = "SELECT * FROM orders o JOIN product p ON o.productcode = p.pnum WHERE p.pname LIKE %:name% AND o.userCode = :code", nativeQuery = true)
+	List<Order> findByProductNameContaining(
+	        @Param("name") String name,
+	        @Param("code") Integer code);
+
+
 }

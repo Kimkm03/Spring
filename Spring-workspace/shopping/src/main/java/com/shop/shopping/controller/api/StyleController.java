@@ -27,7 +27,7 @@ import com.shop.shopping.service.StyleService;
 @RequestMapping("/api/style")
 @CrossOrigin(origins = "http://localhost:3000")
 public class StyleController {
-private final StyleService styleService;
+	private final StyleService styleService;
 	
 	@Autowired
 	public StyleController(StyleService styleService) {
@@ -72,6 +72,11 @@ private final StyleService styleService;
 	@GetMapping("/{Id}")
 	public Optional<Style> getStyleById(@PathVariable int Id){
 		return styleService.getStyleById(Id);
+	}
+	
+	@GetMapping("member/{memnum}")
+	public List<Style> getStyleByMemnum(@PathVariable Integer memnum){
+		return styleService.getMemNum(memnum);
 	}
 	
 	@GetMapping("/{Id}/picture")

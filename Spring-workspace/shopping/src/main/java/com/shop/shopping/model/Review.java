@@ -22,14 +22,20 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+	private int memnum;
     private int productCode;
     private int starcnt;
+    
+    private String productColor;
+    private String productSize;
     
     @Column(length = 500)
     private String content;
     
     private String delveryreply;
     private String takeoutreply;
+    
+    private boolean state;
     
     @Column(columnDefinition = "LONGBLOB")
     private byte[] picture;

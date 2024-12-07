@@ -43,4 +43,8 @@ public class StyleService {
 	public Optional<Style> getStyleById(Integer id) {
         return styleRepository.findById(id);
     }
+	
+	public List<Style> getMemNum(Integer memnum){
+		return styleRepository.findByMemNum(memnum);
+	}
 }

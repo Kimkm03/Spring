@@ -49,12 +49,20 @@ public class OrderService {
         orderRepository.save(order);
     }
     
+    public List<Order> searchOrders(Integer userCode, String orderStatus, String startDate, String endDate) {
+        return orderRepository.findOrdersByCriteria(userCode, orderStatus, startDate, endDate);
+    }
+    
     public List<Order> getOrderByUserCode(Integer id) {
         return orderRepository.findByUserCode(id);
     }
     
     public List<Order> getOrderByUserCodeAndOrderStatus(Integer id){
     	return orderRepository.findByUserCodeAndOrderStatus(id);
+    }
+    
+    public List<Order> searchOrders(String keyword, Integer code) {
+        return orderRepository.findByProductNameContaining(keyword, code);
     }
     
     public List<Order> getAllOrders(){

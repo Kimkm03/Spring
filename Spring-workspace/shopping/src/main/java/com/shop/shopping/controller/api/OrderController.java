@@ -5,12 +5,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.shop.shopping.dto.DeliverySearchCriteria;
 import com.shop.shopping.dto.OrderRequest;
 import com.shop.shopping.service.IamportService;
 import com.shop.shopping.service.OrderService;
@@ -87,6 +87,26 @@ public class OrderController {
                     .status(HttpStatus.BAD_REQUEST)
                     .body(new ResponseDto<>(-1, "Invalid order status"));
         }
+    }
+    
+    // 주문 필터링 조회
+    @PostMapping("/order/search")
+    public ResponseEntity<List<Order>> searchOrders(@RequestBody DeliverySearchCriteria criteria) {
+    	// 상태값이 "전체"인 경우 null로 처리
+        String orderStatus = criteria.getOrderStatus().equals("전체") ? null : criteria.getOrderStatus();
+
+        List<Order> orders = orderService.searchOrders(
+            criteria.getUserCode(), // 추가된 userCode
+            orderStatus,
+            criteria.getStartDate(),
+            criteria.getEndDate()
+        );
+        return ResponseEntity.ok(orders);
+    }
+    
+    @GetMapping("orders/search")
+    public List<Order> searchProducts(@RequestParam String keyword, Integer code) {
+        return orderService.searchOrders(keyword, code);
     }
     
     @GetMapping("/orderdetail/{id}")
